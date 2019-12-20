@@ -2,11 +2,12 @@ import * as fs from 'fs';
 import * as readline from 'readline';
 import { SpecialStrings, Helper } from './utils/Helper';
 import { IRawProperty, IRawComponent, IRawCalendar } from './model/RawCalendarTypes';
+import { PropertyType } from './model/PropertyType';
 
 export class CalendarParser {
 
     public static parse(lines: string[]): IRawCalendar {
-        let currentComponent: IRawComponent | undefined = undefined;
+        let currentComponent: IRawComponent | undefined;
 
         const components: IRawComponent[] = [];
         const properties: IRawProperty[] = [];
@@ -28,8 +29,8 @@ export class CalendarParser {
                     properties: []
                 };
                 components.push(currentComponent);
-                // console.log(" ".repeat(offset), line)
-            } else if (line.startsWith(SpecialStrings.END)) {
+
+            } else if (line.startsWith(SpecialStrings.END) && line !== PropertyType.X_WR_TIMEZONE) {
                 currentComponent = undefined;
             } else {
                 const property = Helper.parseLine(line);
@@ -47,8 +48,7 @@ export class CalendarParser {
         const temp = data.split(/\r?\n/);
         const lines: string[] = [];
 
-
-        for (let line of temp) {
+        for (const line of temp) {
             unwrap(lines)(line);
         }
 
@@ -69,7 +69,7 @@ export class CalendarParser {
                 );
 
                 rl.on('close',
-                    function () {
+                    () => {
                         const calendar = CalendarParser.parse(lines);
                         resolve(calendar);
                     }
@@ -82,7 +82,7 @@ export class CalendarParser {
 }
 
 function unwrap(lines: string[]) {
-    return function (line: string) {
+    return (line: string) => {
         if (line.startsWith(' ') || line.startsWith('\t')) {
             line = line.substr(1);
             line = lines.pop() + line;
@@ -90,5 +90,5 @@ function unwrap(lines: string[]) {
 
         if (line) // ignore empty lines
             lines.push(line);
-    }
+    };
 }

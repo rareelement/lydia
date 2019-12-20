@@ -106,6 +106,6 @@ export function extractEntityName(line: string): string {
     return name;
 }
 
-export function cookComponent(rawComponent: IRawComponent): Component{
-    return CalendarUtils.enrichComponent(rawComponent);
+export function cookComponent(rawComponent: IRawComponent, defaultTZ?: string): Component {
+    return CalendarUtils.enrichComponent(rawComponent, defaultTZ);
 }

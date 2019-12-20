@@ -1,4 +1,7 @@
-import { Status, IStatusProp, ITextProp, Transparency, ISequenceProp, ITransparencyProp, IExperimentalProp, IRichProperty, IUnsupportedRichProp, IRRuleProp } from './model/SimpleTypes';
+import {
+    Status, IStatusProp, ITextProp, Transparency, ISequenceProp, ITransparencyProp, IExperimentalProp,
+    IRichProperty, IUnsupportedRichProp, IRRuleProp
+} from './model/SimpleTypes';
 import { PropertyType } from './model/PropertyType';
 import { ValidationError, AssertionError } from './CustomErrors';
 import { IRawProperty, IRawComponent } from './model/RawCalendarTypes';
@@ -9,11 +12,11 @@ import * as rrule from 'rrule';
 
 export class CalendarUtils {
 
-    public static enrichComponent(rawComponent: IRawComponent): Component {
-        return new Component(rawComponent);
+    public static enrichComponent(rawComponent: IRawComponent, defaultTZ?: string): Component {
+        return new Component(rawComponent, defaultTZ);
     }
 
-    public static enrichProperty(rawProperty: IRawProperty, rawComponent: IRawComponent): IRichProperty {
+    public static enrichProperty(rawProperty: IRawProperty, rawComponent: IRawComponent, defaultTZ?: string): IRichProperty {
         const name = rawProperty.name;
 
         if (name.startsWith(PropertyType.EXPERIMENTAL_PREFIX))
@@ -33,13 +36,13 @@ export class CalendarUtils {
                 return handleSequence(rawProperty);
             case PropertyType.DTSTART:
             case PropertyType.DTEND:
-                return handleDateTime(rawProperty);
+                return handleDate(rawProperty, defaultTZ);
             case PropertyType.DTSTAMP:
             case PropertyType.CREATED:
             case PropertyType.LAST_MODIFIED:
-                return handleTimestamp(rawProperty);
+                return handleTimestamp(rawProperty, defaultTZ);
             case PropertyType.RRULE:
-                return handleRRule(rawProperty, rawComponent)
+                return handleRRule(rawProperty, rawComponent);
         }
 
         const unknown: IUnsupportedRichProp = {
@@ -52,13 +55,13 @@ export class CalendarUtils {
     }
 }
 
-function handleDateTime(rawProperty: IRawProperty): IDTProperty {
-    const property = DateUtils.enrichDTProperty(rawProperty);
+function handleDate(rawProperty: IRawProperty, defaultTZ?: string): IDTProperty {
+    const property = DateUtils.enrichDTProperty(rawProperty, defaultTZ);
     return property;
 }
 
-function handleTimestamp(rawProperty: IRawProperty): ITimestampPropery {
-    const property = DateUtils.entrichTSProperty(rawProperty);
+function handleTimestamp(rawProperty: IRawProperty, defaultTZ?: string): ITimestampPropery {
+    const property = DateUtils.entrichTSProperty(rawProperty, defaultTZ);
     return property;
 }
 
@@ -78,8 +81,8 @@ function handleStatus(rawProperty: IRawProperty): IStatusProp {
 
 function handleRRule(rawProperty: IRawProperty, rawComponent: IRawComponent): IRRuleProp {
     const rruleSet: rrule.RRuleSet | undefined = DateUtils.createRuleSet(rawComponent);
-    
-    if(!rruleSet){
+
+    if (!rruleSet) {
         throw new AssertionError('Empty rule set returned for non empty element');
     }
 
@@ -129,7 +132,7 @@ function handleSequence(rawProperty: IRawProperty): ISequenceProp {
     if (!value)
         throw new ValidationError('Missing value for Sequence');
 
-    const parsed: number = parseInt(value);
+    const parsed: number = parseInt(value, 10);
 
     if (isNaN(parsed))
         throw new ValidationError('Invalid Sequence: ' + parsed);

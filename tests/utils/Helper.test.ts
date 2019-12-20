@@ -1,6 +1,5 @@
 import { extractEntityName, Helper } from '../../src/utils/Helper';
 import { ValidationError } from '../../src/CustomErrors';
-import { ComponentType } from '../../src/model/ComponentType';
 import { PropertyType } from '../../src/model/PropertyType';
 import { ParameterType } from '../../src/model/ParameterType';
 
@@ -11,7 +10,6 @@ test('Extracting valid entity names', () => {
         expect(extractEntityName('DTSTART;TZID=America/Toronto:20191121T190000')).toBe('DTSTART');
         expect(extractEntityName('RECURRENCE-ID;TZID=America/Toronto:20191114T190000')).toBe('RECURRENCE-ID');
         expect(extractEntityName('DESCRIPTION:')).toBe('DESCRIPTION');
-        expect(extractEntityName('DESCriPTION:')).toBe('DESCRIPTION');
 });
 
 test('Extracting invalid entity names', () => {

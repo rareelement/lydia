@@ -58,6 +58,7 @@ export enum PropertyType {
     UID = 'UID',
     URL = 'URL',
     VERSION = 'VERSION',
+    X_WR_TIMEZONE = 'X-WR-TIMEZONE', // default timezone used by Google and others
     UNSUPPORTED = 'UNSUPPORTED'
 }
 

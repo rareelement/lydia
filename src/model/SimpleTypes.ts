@@ -18,7 +18,7 @@ export interface IRichProperty {
     type: PropertyType;
 }
 
-export interface IUnsupportedRichProp extends IRichProperty{
+export interface IUnsupportedRichProp extends IRichProperty {
     type: PropertyType;
     value?: string;
     rawProperty: IRawProperty;
@@ -67,4 +67,4 @@ export interface IRRuleProp extends IRichProperty {
     name: string;
     type: PropertyType.RRULE;
     rruleSet: rrule.RRuleSet;
- }
+}

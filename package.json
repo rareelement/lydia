@@ -1,8 +1,16 @@
 {
   "name": "@rareelements/lydia",
   "description": "RFC5545 implementation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
+  "keywords": [
+    "RFC5545",
+    "RFC2445",
+    "iCalendar",
+    "VEVENT",
+    "ical",
+    "calendar"
+  ],
   "author": {
     "name": "rareelement",
     "email": "support@rareelement.ca"
@@ -25,31 +33,31 @@
     "lint": "tslint --project ."
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
     "@babel/plugin-transform-typescript": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "@types/jest": "^24.0.18",
+    "@babel/preset-env": "^7.7.7",
+    "@types/jest": "^24.0.24",
     "@types/moment-timezone": "^0.5.12",
-    "@types/node": "^12.7.5",
+    "@types/node": "^12.12.21",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
     "cross-env": "^5.2.1",
     "del-cli": "^3.0.0",
-    "lint-staged": "^9.3.0",
     "jest": "^24.9.0",
+    "lint-staged": "^9.3.0",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
     "tslint-sonarts": "^1.9.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.7.3"
   },
   "dependencies": {
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "rrule": "^2.6.2"
+    "rrule": "^2.6.4"
   },
   "husky": {
     "hooks": {

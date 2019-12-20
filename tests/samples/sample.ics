@@ -4,7 +4,7 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:ECML PKDD 2015
-X-WR-TIMEZONE:Europe/Lisbon
+X-WR-TIMEZONE:America/Toronto
 X-WR-CALDESC:The European Conference on Machine Learning and Principles and
   Practice of\nKnowledge Discovery in Databases (ECMLPKDD) will take place i
  n Porto\,\nPortugal\, from September 7th to 11th\, 2015 (http://www.ecmlpkd
@@ -13,8 +13,8 @@ X-WR-CALDESC:The European Conference on Machine Learning and Principles and
   ECML and 18 PKDD\nconferences\, which have been jointly organized for the 
  past 14 years.
 BEGIN:VTIMEZONE
-TZID:Europe/Lisbon
-X-LIC-LOCATION:Europe/Lisbon
+TZID:America/Toronto
+X-LIC-LOCATION:America/Toronto
 BEGIN:STANDARD
 TZOFFSETFROM:+0100
 TZOFFSETTO:+0000

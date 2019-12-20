@@ -7,20 +7,19 @@ import { IRawComponent, IRawProperty } from '../model/RawCalendarTypes';
 import { ValidationError } from '../CustomErrors';
 import { IRRuleProp } from '../model/SimpleTypes';
 
-
+const UTC_SUFFIX = 'Z';
 export class DateUtils {
 
-    public static enrichDTProperty(rawProperty: IRawProperty): IDTProperty {
+    public static enrichDTProperty(rawProperty: IRawProperty, defaultTZ?: string): IDTProperty {
         const { value, params, name } = rawProperty;
         let timezone: string | undefined;
 
         if (!value)
             throw new ValidationError('Missing value for DT property: ' + JSON.stringify(rawProperty));
 
-
-        if (params) {
-            const tzid = params.filter((p) => p.name == ParameterType.TZID);
-            timezone = tzid && tzid.length > 0 ? tzid[0].value : undefined;
+        if (params && !value.toUpperCase().endsWith(UTC_SUFFIX)) {
+            const tzid = params.filter((p) => p.name === ParameterType.TZID);
+            timezone = tzid && tzid.length > 0 ? tzid[0].value : defaultTZ;
         }
 
         const property: IDTProperty = {
@@ -32,13 +31,20 @@ export class DateUtils {
         return property;
     }
 
-    public static entrichTSProperty(rawProperty: IRawProperty): ITimestampPropery {
-        const { value, name } = rawProperty;
+    public static entrichTSProperty(rawProperty: IRawProperty, defaultTZ?: string): ITimestampPropery {
+        const { value, params, name } = rawProperty;
+        let timezone: string | undefined;
+
         if (!value)
             throw new ValidationError('Missing value for DT property: ' + JSON.stringify(rawProperty));
 
+        if (params && !value.toUpperCase().endsWith(UTC_SUFFIX)) {
+            const tzid = params.filter((p) => p.name === ParameterType.TZID);
+            timezone = tzid && tzid.length > 0 ? tzid[0].value : defaultTZ;
+        }
+
         return {
-            value: DateUtils.parseDate(value),
+            value: DateUtils.parseDate(value, timezone),
             type: name as DTStampType
         };
     }
@@ -72,33 +78,9 @@ export class DateUtils {
         return tz ? moment.tz(value, 'YYYYMMDDTHHmmZZ', tz).toDate() : moment(value).toDate();
     }
 
-    public static getOccurences(rrule: IRRuleProp, start: Date, end: Date){
-        const ruleSet: rrule.RRuleSet = rrule.rruleSet;
+    public static getOccurences(rruleProp: IRRuleProp, start: Date, end: Date) {
+        const ruleSet: rrule.RRuleSet = rruleProp.rruleSet;
         const dates: Date[] = ruleSet.between(start, end);
         return dates;
     }
-
-    // public static parseDateComponent({ properties }: IRawComponent, type: PropertyType) {
-    //     if (!properties)
-    //         return undefined;
-
-    //     const _prop = properties.filter((p) => p.name === type);
-
-    //     // tslint:disable-next-line:variable-name
-    //     if (_prop && _prop.length > 0) {
-    //         const dt = _prop[0];
-    //         // tslint:disable-next-line:variable-name
-    //         const _tz = dt.params && dt.params.filter((p) => p.name === ParameterType.TZID);
-    //         const tz = _tz && _tz.length > 0 ? _tz[0].value : undefined;
-
-    //         // if (tz) {
-    //         //     console.log(dt.value, tz,
-    //         //         moment(DateUtils.parseDate(dt.value)).format('YYYYMMDDTHHmmZZ'),
-    //         //         moment(DateUtils.parseDate(dt.value, tz)).format('YYYYMMDDTHHmmZZ'));
-    //         // }
-    //         return this.parseDate(dt.value, tz);
-    //     }
-
-    //     return undefined;
-    // }
 }
