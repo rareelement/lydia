@@ -1,7 +1,7 @@
 {
   "name": "@rareelements/lydia",
   "description": "RFC5545 implementation",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "keywords": [
     "RFC5545",
@@ -33,30 +33,31 @@
     "lint": "tslint --project ."
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-decorators": "^7.6.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
-    "@babel/plugin-transform-typescript": "^7.6.0",
-    "@babel/preset-env": "^7.7.7",
-    "@types/jest": "^24.0.24",
-    "@types/moment-timezone": "^0.5.12",
-    "@types/node": "^12.12.21",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
+    "@babel/plugin-transform-typescript": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@types/jest": "^24.9.1",
+    "@types/moment-timezone": "^0.5.13",
+    "@types/node": "^12.12.50",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^26.1.0",
     "cross-env": "^5.2.1",
-    "del-cli": "^3.0.0",
-    "jest": "^24.9.0",
-    "lint-staged": "^9.3.0",
-    "ts-jest": "^24.1.0",
+    "del-cli": "^3.0.1",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "lint-staged": "^9.5.0",
+    "ts-jest": "^26.1.2",
     "tslint": "^5.20.0",
     "tslint-sonarts": "^1.9.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.26",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
     "rrule": "^2.6.4"
   },
   "husky": {
